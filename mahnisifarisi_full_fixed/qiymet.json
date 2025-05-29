@@ -1,12 +1,1 @@
-[
-  {
-    "title": "U\u015faq Mahn\u0131s\u0131",
-    "oldPrice": "70 AZN",
-    "newPrice": "60 AZN"
-  },
-  {
-    "title": "Toy Mahn\u0131s\u0131",
-    "oldPrice": "90 AZN",
-    "newPrice": "75 AZN"
-  }
-]
+{'endTime': '2025-12-31T23:59', 'items': [{'title': 'Uşaq Mahnısı', 'oldPrice': '70 AZN', 'newPrice': '60 AZN'}, {'title': 'Toy Mahnısı', 'oldPrice': '90 AZN', 'newPrice': '75 AZN'}, {'title': 'Sevgili Mahnısı', 'oldPrice': '80 AZN', 'newPrice': '65 AZN'}]}
