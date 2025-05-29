@@ -1,0 +1,15 @@
+{
+  "qiymetler": [
+    {
+      "ad": "Uşaq Mahnısı",
+      "qiymet": "60 AZN",
+      "endirimli": "50 AZN"
+    },
+    {
+      "ad": "Sevgiliyə Mahnı",
+      "qiymet": "70 AZN",
+      "endirimli": "60 AZN"
+    }
+  ],
+  "endirim_sona_qalan_vaxt": "2025-12-31T23:59:59"
+}

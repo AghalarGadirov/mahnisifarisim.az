@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Uşaq Mahnısı",
+    "questions": [
+      "Uşağın adı və yaşı",
+      "Sevdiyi heyvan",
+      "Ən sevdiyi rəng"
+    ],
+    "song": "usaq.mp3"
+  },
+  {
+    "title": "Sevgiliyə Mahnı",
+    "questions": [
+      "Adı",
+      "Ən yadda qalan xatirə",
+      "Sevdiyi söz"
+    ],
+    "song": "sevgi.mp3"
+  }
+]
