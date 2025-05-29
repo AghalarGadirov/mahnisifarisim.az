@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Təklif və Şikayətlər</title>
+  <style>
+    body {
+      background-color: #6A1B9A;
+      color: white;
+      font-family: "Segoe UI", Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 30px 10px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    form {
+      background-color: #9932CC;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: auto;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #BA55D3;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #9b3bb8;
+    }
+  
+.menu-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  text-align: right;
+}
+.menu-container .hamburger {
+  background-color: #BA55D3;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 22px;
+}
+.menu-items {
+  display: none;
+  background-color: #9932CC;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 5px;
+}
+.menu-items a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+.menu-items a:hover {
+  text-decoration: underline;
+}
+
+</style>
+</head>
+<body>
+
+<div class="menu-container">
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <div id="menu" class="menu-items">
+    <!-- Menyu elementləri JavaScript ilə əlavə olunacaq -->
+  </div>
+</div>
+
+  <h1>💬 Təklif və Şikayətlər</h1>
+
+  <form id="feedbackForm">
+    <label>Adınız və Soyadınız:</label>
+    <input type="text" name="name">
+
+    <label>Təklif və ya Şikayətiniz:</label>
+    <textarea name="message" rows="3"></textarea>
+
+    <button type="button" onclick="sendWhatsApp()">WhatsApp-a Göndər</button>
+  </form>
+
+  <script>
+    function sendWhatsApp() {
+      const form = document.getElementById("feedbackForm");
+      const name = form.name.value.trim();
+      const message = form.message.value.trim();
+
+      if (!name || !message) {
+        alert("Zəhmət olmasa bütün xanaları doldurun.");
+        return;
+      }
+
+      const text = `📢 Təklif və ya Şikayət\n👤 Ad: ${name}\n💬 Mesaj: ${message}`;
+      const url = `https://wa.me/994507142403?text=${encodeURIComponent(text)}`;
+
+      window.location.href = url;
+    }
+  </script>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("menu");
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
+  }
+
+  const pages = [
+    { name: "📞 Bizimlə Əlaqə", url: "elaqe.html" },
+    { name: "💰 Qiymət Siyahısı", url: "qiymet.html" },
+    { name: "📝 Sifariş üçün Form", url: "formlar.html" },
+    { name: "💡 Təkliflər/Şikayətlər", url: "teklifler.html" },
+    { name: "🏠 Ana Səhifə", url: "index.html" }
+  ];
+
+  const currentPage = window.location.pathname.split("/").pop();
+
+  window.onload = function () {
+    const menu = document.getElementById("menu");
+    pages.forEach(p => {
+      if (p.url !== currentPage) {
+        const link = document.createElement("a");
+        link.href = p.url;
+        link.textContent = p.name;
+        menu.appendChild(link);
+      }
+    });
+  };
+</script>
+
+</body>
+</html>

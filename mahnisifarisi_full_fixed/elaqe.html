@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bizimlə Əlaqə</title>
+  <style>
+    body {
+      background-color: #6A1B9A;
+      color: white;
+      font-family: "Segoe UI", Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 30px 10px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .section {
+      background-color: #9932CC;
+      padding: 20px;
+      margin: 10px auto;
+      border-radius: 10px;
+      max-width: 600px;
+      text-align: left;
+      position: relative;
+    }
+    .map-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: none;
+    }
+    .map-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .contact-item {
+      margin-bottom: 15px;
+    }
+    .actions {
+      margin-top: 5px;
+    }
+    a.button {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 8px 16px;
+      background-color: #BA55D3;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    a.button:hover {
+      background-color: #9b3bb8;
+    }
+
+.menu-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  text-align: right;
+}
+.menu-container .hamburger {
+  background-color: #BA55D3;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 22px;
+}
+.menu-items {
+  display: none;
+  background-color: #9932CC;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 5px;
+}
+.menu-items a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+.menu-items a:hover {
+  text-decoration: underline;
+}
+  </style>
+</head>
+<body>
+<div class="menu-container">
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <div id="menu" class="menu-items"></div>
+</div>
+
+  <h1>📍 Ünvan</h1>
+  <div class="section">
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.6860661861516!2d49.86709231541995!3d40.40926197936425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d8a43b22b0f%3A0xf4801c4170b2b8d2!2zQmFrxLF8LCDhg5Dhg5rhg5Thg6Lhg5jhg5Xhg6s!5e0!3m2!1str!2saz!4v1600000000000!5m2!1str!2saz" allowfullscreen="" loading="lazy"></iframe>
+      <a class="map-overlay" href="https://maps.app.goo.gl/iWmmMVHKLjuiAZ9e8" target="_blank" title="Xəritədə aç"></a>
+    </div>
+  </div>
+
+  <h1>📞 Əlaqə Nömrələri</h1>
+  <div class="section">
+    <div class="contact-item">
+      <strong>+994 50 303 58 47</strong>
+      <div class="actions">
+        <a href="tel:+994503035847" class="button">Zəng et</a>
+        <a href="https://wa.me/994503035847" target="_blank" class="button">WhatsApp</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <strong>+994 51 437 41 21</strong>
+      <div class="actions">
+        <a href="tel:+994514374121" class="button">Zəng et</a>
+        <a href="https://wa.me/994514374121" target="_blank" class="button">WhatsApp</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <strong>+994 50 714 24 03</strong>
+      <div class="actions">
+        <a href="tel:+994507142403" class="button">Zəng et</a>
+        <a href="https://wa.me/994507142403" target="_blank" class="button">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <h1>📧 E-mail</h1>
+  <div class="section">
+    <p>sifarismahni@gmail.com</p>
+  </div>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("menu");
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
+  }
+
+  const pages = [
+    { name: "📞 Bizimlə Əlaqə", url: "elaqe.html" },
+    { name: "💰 Qiymət Siyahısı", url: "qiymet.html" },
+    { name: "📝 Sifariş üçün Form", url: "formlar.html" },
+    { name: "💡 Təkliflər/Şikayətlər", url: "teklifler.html" },
+    { name: "🏠 Ana Səhifə", url: "index.html" }
+  ];
+
+  const currentPage = window.location.pathname.split("/").pop();
+
+  window.onload = function() {
+    const menu = document.getElementById("menu");
+    pages.forEach(p => {
+      if (p.url !== currentPage) {
+        const link = document.createElement("a");
+        link.href = p.url;
+        link.textContent = p.name;
+        menu.appendChild(link);
+      }
+    });
+  };
+</script>
+
+</body>
+</html>
