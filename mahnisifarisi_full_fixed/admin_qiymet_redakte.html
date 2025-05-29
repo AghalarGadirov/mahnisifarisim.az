@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>💰 Qiymət Siyahısı – Admin Panel</title>
+  <style>
+    body {
+      background-color: #6A1B9A;
+      color: white;
+      font-family: "Segoe UI", Arial, sans-serif;
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .price-section {
+      background-color: #9932CC;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: 10px auto;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select {
+      width: calc(100% - 30px);
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1em;
+    }
+    button {
+      background-color: #BA55D3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #9b3bb8;
+    }
+    .input-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .input-row input {
+      flex: 1;
+    }
+    .remove-btn {
+      margin-left: 10px;
+      background-color: #e53935;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+    .remove-btn:hover {
+      background-color: #c62828;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💰 Qiymət Siyahısı – Redaktə Paneli</h1>
+
+  <div id="priceContainer"></div>
+
+  <button onclick="addPrice()">+ Yeni Qiymət Əlavə Et</button>
+  <br>
+  <button onclick="saveChanges()">💾 Yadda Saxla</button>
+
+  <script>
+    const data = [
+      { name: "Uşaq Mahnısı", oldPrice: "80 AZN", newPrice: "60 AZN" },
+      { name: "Sevgili Mahnısı", oldPrice: "75 AZN", newPrice: "55 AZN" },
+      { name: "Ata/Ana Mahnısı", oldPrice: "70 AZN", newPrice: "50 AZN" },
+      { name: "Video ilə birlikdə", oldPrice: "100 AZN", newPrice: "80 AZN" }
+    ];
+
+    function renderPrices() {
+      const container = document.getElementById("priceContainer");
+      container.innerHTML = "";
+      data.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "price-section";
+        div.innerHTML = `
+          <label>Kateqoriya Adı:</label>
+          <input type="text" value="${item.name}" onchange="data[${index}].name = this.value">
+          <label>Endirimdən Əvvəl:</label>
+          <input type="text" value="${item.oldPrice}" onchange="data[${index}].oldPrice = this.value">
+          <label>Endirimli Qiymət:</label>
+          <input type="text" value="${item.newPrice}" onchange="data[${index}].newPrice = this.value">
+          <button class="remove-btn" onclick="removePrice(${index})">Sil</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function addPrice() {
+      data.push({ name: "", oldPrice: "", newPrice: "" });
+      renderPrices();
+    }
+
+    function removePrice(index) {
+      data.splice(index, 1);
+      renderPrices();
+    }
+
+    function saveChanges() {
+      console.log("Yadda saxlanılan qiymətlər:", data);
+      alert("Dəyişikliklər saxlanıldı (demo versiya)");
+    }
+
+    renderPrices();
+  </script>
+
+</body>
+</html>
