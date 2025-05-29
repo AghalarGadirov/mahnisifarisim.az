@@ -2,48 +2,206 @@
 <html lang="az">
 <head>
   <meta charset="UTF-8">
-  <title>Qiymətlər</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qiymət Siyahısı</title>
   <style>
-    body { background: #4A148C; color: white; font-family: sans-serif; padding: 20px; }
-    .card { background: #6A1B9A; padding: 15px; margin: 10px 0; border-radius: 8px; }
-    .old { text-decoration: line-through; color: #ccc; margin-right: 10px; }
-    .new { color: #00E676; font-weight: bold; }
-    #countdown { margin-top: 20px; font-size: 18px; text-align: center; }
+    body {
+      background-color: #6A1B9A;
+      color: white;
+      font-family: "Segoe UI", Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 30px 10px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .pricing-table {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .category {
+      background-color: #9932CC;
+      padding: 20px;
+      border-radius: 12px;
+      width: 280px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .category h2 {
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #ffb3b3;
+      margin-right: 10px;
+    }
+
+    .new-price {
+      color: #00FFCC;
+      font-weight: bold;
+    }
+
+    .countdown {
+      font-size: 18px;
+      background-color: red;
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .menu-container {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      text-align: right;
+    }
+
+    .menu-container .hamburger {
+      background-color: #BA55D3;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .menu-items {
+      display: none;
+      background-color: #9932CC;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 5px;
+    }
+
+    .menu-items a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 5px;
+    }
+
+    .menu-items a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
+  <div class="menu-container">
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <div id="menu" class="menu-items"></div>
+  </div>
 
-<h1>💰 Qiymət Siyahısı</h1>
-<div id="price-container"></div>
-<div id="countdown">⏳ Yüklənir...</div>
+  <h1>💰 Qiymət Siyahısı</h1>
 
-<script>
-fetch("https://mahnisifarisim-az.onrender.com/api/qiymet")
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById("price-container");
-    data.items.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `<div><strong>${item.title}</strong></div>
-                       <div><span class="old">${item.oldPrice}</span><span class="new">${item.newPrice}</span></div>`;
-      container.appendChild(div);
-    });
+  <div class="pricing-table">
+    <div class="category">
+      <h2>Uşaq Mahnısı</h2>
+      <div class="price">
+        <span class="old-price">80 AZN</span>
+        <span class="new-price">60 AZN</span>
+      </div>
+    </div>
+    <div class="category">
+      <h2>Sevgili Mahnısı</h2>
+      <div class="price">
+        <span class="old-price">75 AZN</span>
+        <span class="new-price">55 AZN</span>
+      </div>
+    </div>
+    <div class="category">
+      <h2>Ata/Ana Mahnısı</h2>
+      <div class="price">
+        <span class="old-price">70 AZN</span>
+        <span class="new-price">50 AZN</span>
+      </div>
+    </div>
+    <div class="category">
+      <h2>Video ilə birlikdə</h2>
+      <div class="price">
+        <span class="old-price">100 AZN</span>
+        <span class="new-price">80 AZN</span>
+      </div>
+    </div>
+  </div>
 
-    const endTime = new Date(data.endTime);
+  <div class="countdown" id="countdown">Endirim bitməsinə: 23:00:00</div>
+
+  <script>
+    let countdownElement = document.getElementById("countdown");
+    let endTime = new Date("2025-05-29T23:00:00+04:00").getTime();
+
     function updateCountdown() {
-      const now = new Date();
-      const diff = endTime - now;
-      if (diff <= 0) return document.getElementById("countdown").innerText = "⏰ Endirim bitdi";
-      const d = Math.floor(diff / (1000*60*60*24));
-      const h = Math.floor((diff / (1000*60*60)) % 24);
-      const m = Math.floor((diff / (1000*60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
-      document.getElementById("countdown").innerText = `⏳ ${d} gün ${h} saat ${m} dəq ${s} san qaldı`;
+      let now = new Date().getTime();
+      let distance = endTime - now;
+
+      if (distance <= 0) {
+        countdownElement.innerText = "Endirim bitdi";
+        countdownElement.style.backgroundColor = "gray";
+
+        document.querySelectorAll(".price").forEach(el => {
+          const old = el.querySelector(".old-price");
+          const newp = el.querySelector(".new-price");
+          if (old && newp) {
+            old.style.textDecoration = "none";
+            old.style.color = "white";
+            newp.style.display = "none";
+          }
+        });
+        return;
     }
-    updateCountdown();
+
+      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownElement.innerText = `Endirim bitməsinə: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
     setInterval(updateCountdown, 1000);
-  });
-</script>
+
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+
+    const pages = [
+      { name: "📞 Bizimlə Əlaqə", url: "elaqe.html" },
+      { name: "💰 Qiymət Siyahısı", url: "qiymet.html" },
+      { name: "📝 Sifariş üçün Form", url: "formlar.html" },
+      { name: "💡 Təkliflər/Şikayətlər", url: "teklifler.html" },
+      { name: "🏠 Ana Səhifə", url: "index.html" }
+    ];
+
+    const currentPage = window.location.pathname.split("/").pop();
+
+    window.onload = function () {
+      const menu = document.getElementById("menu");
+      pages.forEach(p => {
+        if (p.url !== currentPage) {
+          const link = document.createElement("a");
+          link.href = p.url;
+          link.textContent = p.name;
+          menu.appendChild(link);
+        }
+      });
+    };
+  </script>
 </body>
 </html>
