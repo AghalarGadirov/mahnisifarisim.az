@@ -2,44 +2,60 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-const dataPath = path.join(__dirname, 'data');
+// JSON fayl yolları
+const paths = {
+  qiymet: path.join(__dirname, 'qiymet.json'),
+  elaqe: path.join(__dirname, 'elaqe.json'),
+  formlar: path.join(__dirname, 'formlar.json')
+};
 
+// JSON faylını oxuma funksiyası
+const readData = (filePath) => {
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+};
+
+// GET routeları
 app.get('/api/qiymet', (req, res) => {
-  const data = fs.readFileSync(path.join(dataPath, 'qiymet.json'));
-  res.json(JSON.parse(data));
-});
-
-app.post('/api/qiymet', (req, res) => {
-  fs.writeFileSync(path.join(dataPath, 'qiymet.json'), JSON.stringify(req.body, null, 2));
-  res.sendStatus(200);
+  res.json(readData(paths.qiymet));
 });
 
 app.get('/api/elaqe', (req, res) => {
-  const data = fs.readFileSync(path.join(dataPath, 'elaqe.json'));
-  res.json(JSON.parse(data));
-});
-
-app.post('/api/elaqe', (req, res) => {
-  fs.writeFileSync(path.join(dataPath, 'elaqe.json'), JSON.stringify(req.body, null, 2));
-  res.sendStatus(200);
+  res.json(readData(paths.elaqe));
 });
 
 app.get('/api/formlar', (req, res) => {
-  const data = fs.readFileSync(path.join(dataPath, 'formlar.json'));
-  res.json(JSON.parse(data));
+  res.json(readData(paths.formlar));
 });
 
-app.post('/api/formlar', (req, res) => {
-  fs.writeFileSync(path.join(dataPath, 'formlar.json'), JSON.stringify(req.body, null, 2));
+// PUT routeları
+app.put('/api/qiymet', (req, res) => {
+  fs.writeFileSync(paths.qiymet, JSON.stringify(req.body, null, 2));
   res.sendStatus(200);
 });
 
-app.listen(3000, () => {
-  console.log('✅ Server 3000 portunda işləyir');
+app.put('/api/elaqe', (req, res) => {
+  fs.writeFileSync(paths.elaqe, JSON.stringify(req.body, null, 2));
+  res.sendStatus(200);
+});
+
+app.put('/api/formlar', (req, res) => {
+  fs.writeFileSync(paths.formlar, JSON.stringify(req.body, null, 2));
+  res.sendStatus(200);
+});
+
+// Əsas səhifəyə yönləndirmə (optional)
+app.get('/', (req, res) => {
+  res.send('✅ API server işləyir.');
+});
+
+app.listen(port, () => {
+  console.log(`🚀 Server http://localhost:${port} üzərində işləyir`);
 });
