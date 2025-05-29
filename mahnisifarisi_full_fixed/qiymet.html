@@ -2,90 +2,48 @@
 <html lang="az">
 <head>
   <meta charset="UTF-8">
-  <title>Qiymət Siyahısı</title>
+  <title>Qiymətlər</title>
   <style>
-    body {
-      background-color: #4A148C;
-      color: white;
-      font-family: sans-serif;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .card {
-      background-color: #6A1B9A;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-    .title {
-      font-size: 20px;
-      font-weight: bold;
-    }
-    .prices {
-      margin-top: 5px;
-    }
-    .old {
-      text-decoration: line-through;
-      margin-right: 10px;
-      color: #E0E0E0;
-    }
-    .new {
-      color: #00E676;
-      font-size: 18px;
-    }
-    #countdown {
-      text-align: center;
-      font-size: 18px;
-      margin-top: 30px;
-    }
+    body { background: #4A148C; color: white; font-family: sans-serif; padding: 20px; }
+    .card { background: #6A1B9A; padding: 15px; margin: 10px 0; border-radius: 8px; }
+    .old { text-decoration: line-through; color: #ccc; margin-right: 10px; }
+    .new { color: #00E676; font-weight: bold; }
+    #countdown { margin-top: 20px; font-size: 18px; text-align: center; }
   </style>
 </head>
 <body>
-  <h1>💰 Qiymət Siyahısı</h1>
-  <div id="cards"></div>
-  <div id="countdown">⏳ Endirimə qalan vaxt: Yüklənir...</div>
 
-  <script>
-    fetch("https://mahnisifarisim-az.onrender.com/api/qiymet")
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById("cards");
-        data.items.forEach(item => {
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `
-            <div class="title">${item.title}</div>
-            <div class="prices">
-              <span class="old">${item.oldPrice}</span>
-              <span class="new">${item.newPrice}</span>
-            </div>
-          `;
-          container.appendChild(card);
-        });
+<h1>💰 Qiymət Siyahısı</h1>
+<div id="price-container"></div>
+<div id="countdown">⏳ Yüklənir...</div>
 
-        const endTime = new Date(data.endTime);
-        const countdownEl = document.getElementById("countdown");
+<script>
+fetch("https://mahnisifarisim-az.onrender.com/api/qiymet")
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("price-container");
+    data.items.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `<div><strong>${item.title}</strong></div>
+                       <div><span class="old">${item.oldPrice}</span><span class="new">${item.newPrice}</span></div>`;
+      container.appendChild(div);
+    });
 
-        function updateCountdown() {
-          const now = new Date();
-          const diff = endTime - now;
-          if (diff <= 0) {
-            countdownEl.innerText = "⏰ Endirim müddəti bitdi";
-            clearInterval(timer);
-            return;
-          }
-          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-          const minutes = Math.floor((diff / (1000 * 60)) % 60);
-          const seconds = Math.floor((diff / 1000) % 60);
-          countdownEl.innerText = `⏳ Endirimə qalan vaxt: ${days} gün, ${hours} saat, ${minutes} dəq, ${seconds} san`;
-        }
-
-        updateCountdown();
-        const timer = setInterval(updateCountdown, 1000);
-      });
-  </script>
+    const endTime = new Date(data.endTime);
+    function updateCountdown() {
+      const now = new Date();
+      const diff = endTime - now;
+      if (diff <= 0) return document.getElementById("countdown").innerText = "⏰ Endirim bitdi";
+      const d = Math.floor(diff / (1000*60*60*24));
+      const h = Math.floor((diff / (1000*60*60)) % 24);
+      const m = Math.floor((diff / (1000*60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      document.getElementById("countdown").innerText = `⏳ ${d} gün ${h} saat ${m} dəq ${s} san qaldı`;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  });
+</script>
 </body>
 </html>

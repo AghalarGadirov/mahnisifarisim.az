@@ -1,61 +1,31 @@
-const express = require('express');
-const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
-
+const express = require("express");
+const fs = require("fs");
+const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
 
-// JSON fayl yolları
-const paths = {
-  qiymet: path.join(__dirname, 'qiymet.json'),
-  elaqe: path.join(__dirname, 'elaqe.json'),
-  formlar: path.join(__dirname, 'formlar.json')
-};
+// Qiymet JSON yolu
+const qiymetPath = "./qiymet.json";
 
-// JSON faylını oxuma funksiyası
-const readData = (filePath) => {
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-};
-
-// GET routeları
-app.get('/api/qiymet', (req, res) => {
-  res.json(readData(paths.qiymet));
+// Qiymet oxu
+app.get("/api/qiymet", (req, res) => {
+    fs.readFile(qiymetPath, "utf8", (err, data) => {
+        if (err) return res.status(500).send("Xəta baş verdi!");
+        res.send(JSON.parse(data));
+    });
 });
 
-app.get('/api/elaqe', (req, res) => {
-  res.json(readData(paths.elaqe));
-});
-
-app.get('/api/formlar', (req, res) => {
-  res.json(readData(paths.formlar));
-});
-
-// PUT routeları
-app.put('/api/qiymet', (req, res) => {
-  fs.writeFileSync(paths.qiymet, JSON.stringify(req.body, null, 2));
-  res.sendStatus(200);
-});
-
-app.put('/api/elaqe', (req, res) => {
-  fs.writeFileSync(paths.elaqe, JSON.stringify(req.body, null, 2));
-  res.sendStatus(200);
-});
-
-app.put('/api/formlar', (req, res) => {
-  fs.writeFileSync(paths.formlar, JSON.stringify(req.body, null, 2));
-  res.sendStatus(200);
-});
-
-// Əsas səhifəyə yönləndirmə (optional)
-app.get('/', (req, res) => {
-  res.send('✅ API server işləyir.');
+// Qiymet yaz
+app.put("/api/qiymet", (req, res) => {
+    fs.writeFile(qiymetPath, JSON.stringify(req.body, null, 2), err => {
+        if (err) return res.status(500).send("Yazılmadı!");
+        res.send({ message: "Dəyişiklik yadda saxlanıldı!" });
+    });
 });
 
 app.listen(port, () => {
-  console.log(`🚀 Server http://localhost:${port} üzərində işləyir`);
+    console.log(`Server işə düşdü: http://localhost:${port}`);
 });
