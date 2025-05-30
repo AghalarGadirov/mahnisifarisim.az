@@ -13,7 +13,8 @@
         "Həzn yoxsa şən mahnı istəyirsiniz?",
         "Videoformat istəyirsinizsə uşağın şəklini necə göndərə bilərik?",
         "WhatsApp nömrəniz:"
-      ]
+      ],
+      "type": "video"
     },
     {
       "title": "Sevgilimə özəl mahnı sifarişi",
@@ -28,7 +29,8 @@
         "Mahnıda istifadə olunsun dediyiniz sözlər, ifadələr varmı?",
         "Şəkli necə göndərəcəksiniz?",
         "WhatsApp nömrəniz:"
-      ]
+      ],
+      "type": "video"
     },
     {
       "title": "Anama/atama özəl mahnı sifarişi",
@@ -43,7 +45,8 @@
         "Mahnıda istifadə olunsun dediyiniz sözlər, ifadələr varmı?",
         "Şəkli necə göndərəcəksiniz?",
         "WhatsApp nömrəniz:"
-      ]
+      ],
+      "type": "video"
     }
   ],
   "whatsapp": "994507142403"
