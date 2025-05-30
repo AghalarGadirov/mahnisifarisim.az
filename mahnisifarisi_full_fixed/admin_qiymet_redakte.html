@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="az">
 <head>
@@ -5,11 +6,13 @@
   <title>Admin Panel - Qiymətlər</title>
   <style>
     body { background-color: #4A148C; color: white; font-family: sans-serif; padding: 20px; }
-    .card { background: #6A1B9A; padding: 15px; margin: 10px 0; border-radius: 8px; }
+    .card { background: #6A1B9A; padding: 15px; margin: 10px 0; border-radius: 8px; position: relative; }
     input { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: none; }
     button { padding: 10px 15px; margin: 10px 5px 0 0; border: none; border-radius: 5px; background: #D81B60; color: white; cursor: pointer; }
     button:hover { background: #AD1457; }
     #message { margin-top: 15px; color: lightgreen; }
+    .remove-btn { position: absolute; top: 10px; right: 10px; background: #E53935; }
+    .remove-btn:hover { background: #B71C1C; }
   </style>
 </head>
 <body>
@@ -20,28 +23,46 @@
 <h3>⏳ Geri Sayım Bitmə Tarixi:</h3>
 <input type="datetime-local" id="endTime">
 
+<br><br>
+<button onclick="addItem()">+ Yeni Bənd Əlavə Et</button>
 <button onclick="saveChanges()">Yadda saxla</button>
 <div id="message"></div>
 
 <script>
-let data = {};
+let data = { items: [], endTime: "" };
+
+function renderItems() {
+  const container = document.getElementById("price-container");
+  container.innerHTML = '';
+  data.items.forEach((item, i) => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `
+      <button class="remove-btn" onclick="removeItem(${i})">Sil</button>
+      <input placeholder="Başlıq" value="${item.title}" onchange="data.items[${i}].title = this.value">
+      <input placeholder="Əvvəlki Qiymət" value="${item.oldPrice}" onchange="data.items[${i}].oldPrice = this.value">
+      <input placeholder="Endirimli Qiymət" value="${item.newPrice}" onchange="data.items[${i}].newPrice = this.value">
+    `;
+    container.appendChild(div);
+  });
+}
+
+function addItem() {
+  data.items.push({ title: "", oldPrice: "", newPrice: "" });
+  renderItems();
+}
+
+function removeItem(index) {
+  data.items.splice(index, 1);
+  renderItems();
+}
 
 fetch("https://mahnisifarisim-az.onrender.com/api/qiymet")
   .then(res => res.json())
   .then(json => {
     data = json;
     document.getElementById("endTime").value = json.endTime.slice(0,16);
-    const container = document.getElementById("price-container");
-    json.items.forEach((item, i) => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <input placeholder="Başlıq" value="${item.title}" onchange="data.items[${i}].title = this.value">
-        <input placeholder="Əvvəlki Qiymət" value="${item.oldPrice}" onchange="data.items[${i}].oldPrice = this.value">
-        <input placeholder="Endirimli Qiymət" value="${item.newPrice}" onchange="data.items[${i}].newPrice = this.value">
-      `;
-      container.appendChild(div);
-    });
+    renderItems();
   });
 
 function saveChanges() {
