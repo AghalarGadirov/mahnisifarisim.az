@@ -40,6 +40,29 @@ app.put("/api/formlar", (req, res) => {
     fs.writeFile(formlarPath, JSON.stringify(req.body, null, 2), err => {
         if (err) return res.status(500).send("Formlar saxlanmadı!");
         res.send({ message: "Formlar uğurla yadda saxlandı!" });
+
+// WhatsApp nömrəsini oxu
+app.get("/api/whatsapp", (req, res) => {
+    fs.readFile(formlarPath, "utf8", (err, data) => {
+        if (err) return res.status(500).send("Xəta baş verdi!");
+        const jsonData = JSON.parse(data);
+        res.send({ whatsapp: jsonData.whatsapp || "" });
+    });
+});
+
+// WhatsApp nömrəsini yaz
+app.put("/api/whatsapp", (req, res) => {
+    fs.readFile(formlarPath, "utf8", (err, data) => {
+        if (err) return res.status(500).send("Xəta baş verdi!");
+        const jsonData = JSON.parse(data);
+        jsonData.whatsapp = req.body.whatsapp;
+        fs.writeFile(formlarPath, JSON.stringify(jsonData, null, 2), err => {
+            if (err) return res.status(500).send("Yazılmadı!");
+            res.send({ message: "WhatsApp nömrəsi yeniləndi!" });
+        });
+    });
+});
+
     });
 });
 
