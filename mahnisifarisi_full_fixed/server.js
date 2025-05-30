@@ -1,58 +1,64 @@
 
 const express = require("express");
-const cors = require("cors");
 const fs = require("fs");
+const cors = require("cors");
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// Qiymet endpointləri
-const qiymetPath = "./qiymet.json";
-app.get("/api/qiymet", (req, res) => {
-  fs.readFile(qiymetPath, "utf8", (err, data) => {
-    if (err) return res.status(500).send("Qiymətlər oxunmadı!");
-    res.send(JSON.parse(data));
-  });
-});
-app.put("/api/qiymet", (req, res) => {
-  fs.writeFile(qiymetPath, JSON.stringify(req.body, null, 2), (err) => {
-    if (err) return res.status(500).send("Qiymətlər yazılmadı!");
-    res.send({ message: "Qiymətlər yadda saxlanıldı!" });
-  });
-});
+const formPath = "./formlar.json";
 
-// Əlaqə endpointləri
-const elaqePath = "./elaqe.json";
-app.get("/api/elaqe", (req, res) => {
-  fs.readFile(elaqePath, "utf8", (err, data) => {
-    if (err) return res.status(500).send("Əlaqə oxunmadı!");
-    res.send(JSON.parse(data));
-  });
-});
-app.put("/api/elaqe", (req, res) => {
-  fs.writeFile(elaqePath, JSON.stringify(req.body, null, 2), (err) => {
-    if (err) return res.status(500).send("Əlaqə yazılmadı!");
-    res.send({ message: "Əlaqə məlumatları yadda saxlanıldı!" });
-  });
-});
-
-// Formlar endpointləri
-const formlarPath = "./formlar.json";
+// GET: Get all forms
 app.get("/api/formlar", (req, res) => {
-  fs.readFile(formlarPath, "utf8", (err, data) => {
-    if (err) return res.status(500).send("Formları oxumaqda xəta!");
-    res.send(JSON.parse(data));
-  });
-});
-app.put("/api/formlar", (req, res) => {
-  fs.writeFile(formlarPath, JSON.stringify(req.body, null, 2), err => {
-    if (err) return res.status(500).send("Formlar yazılmadı!");
-    res.send({ message: "Formlar yadda saxlanıldı!" });
+  fs.readFile(formPath, "utf8", (err, data) => {
+    if (err) return res.status(500).send("Xəta baş verdi");
+    const parsed = JSON.parse(data);
+    res.send(parsed.forms);
   });
 });
 
-const PORT = process.env.PORT || 3000;
+// PUT: Replace all forms
+app.put("/api/formlar", (req, res) => {
+  const newForms = { forms: req.body };
+  fs.writeFile(formPath, JSON.stringify(newForms, null, 2), (err) => {
+    if (err) return res.status(500).send("Yazma xətası");
+    res.send({ status: "Uğurla yadda saxlanıldı" });
+  });
+});
+
+// POST: Add a new form
+app.post("/api/formlar", (req, res) => {
+  fs.readFile(formPath, "utf8", (err, data) => {
+    if (err) return res.status(500).send("Oxuma xətası");
+    const parsed = JSON.parse(data);
+    parsed.forms.push(req.body);
+    fs.writeFile(formPath, JSON.stringify(parsed, null, 2), (err) => {
+      if (err) return res.status(500).send("Yazma xətası");
+      res.send({ status: "Əlavə edildi" });
+    });
+  });
+});
+
+// DELETE: Remove form by index
+app.delete("/api/formlar/:index", (req, res) => {
+  fs.readFile(formPath, "utf8", (err, data) => {
+    if (err) return res.status(500).send("Oxuma xətası");
+    const parsed = JSON.parse(data);
+    const index = parseInt(req.params.index);
+    if (index >= 0 && index < parsed.forms.length) {
+      parsed.forms.splice(index, 1);
+      fs.writeFile(formPath, JSON.stringify(parsed, null, 2), (err) => {
+        if (err) return res.status(500).send("Yazma xətası");
+        res.send({ status: "Silindi" });
+      });
+    } else {
+      res.status(404).send("Form tapılmadı");
+    }
+  });
+});
+
 app.listen(PORT, () => {
-  console.log("Server işə düşdü: " + PORT);
+  console.log(`Server işləyir: http://localhost:${PORT}`);
 });
