@@ -1,20 +1,48 @@
 {
-  "phone": "994507142403",
   "forms": [
     {
-      "title": "U\u015fa\u011f\u0131ma \u00f6z\u0259l mahn\u0131",
-      "video": "https://www.instagram.com/reel/Cr1234567890/",
+      "title": "Uşağıma özəl mahnı sifarişi",
+      "video": "video-usaq.mp4",
       "questions": [
-        "Ad\u0131 n\u0259dir?",
-        "Sevdiyi oyunca\u011f\u0131 n\u0259dir?"
+        "Uşağın adı, yaşı və xasiyyəti necədir?",
+        "Bu mahnı hansı münasibət üçündür?",
+        "Mahnıda ana/ata adları istifadə olunsunmu?",
+        "İlk övladınızdırmı?",
+        "Ailənin uşağa xüsusi çağırışları varmı?",
+        "Mahnı xanım yoxsa bəy tərəfindən səsləndirilsin?",
+        "Həzn yoxsa şən mahnı istəyirsiniz?",
+        "Videoformat istəyirsinizsə uşağın şəklini necə göndərə bilərik?",
+        "WhatsApp nömrəniz:"
       ]
     },
     {
-      "title": "C\u00fctl\u00fck \u00fc\u00e7\u00fcn sevgi mahn\u0131s\u0131",
-      "video": "https://example.com/video2.mp4",
+      "title": "Sevgilimə özəl mahnı sifarişi",
+      "video": "video-sevgili.mp4",
       "questions": [
-        "Adlar\u0131 n\u0259dir?",
-        "\u0130lk tan\u0131\u015f olduqlar\u0131 tarix?"
+        "Sevgilinizin və sizin adınız",
+        "Hansı mövzuya diqqət yetirmək istəyirsiniz?",
+        "Sevgilinizin xarakterini və sizə təsirini necə təsvir edərsiniz?",
+        "Xüsusi xatirələriniz varmı?",
+        "Mahnıda tam olaraq nəyi ifadə etmək istəyirsiniz?",
+        "Mahnı xanım yoxsa bəy tərəfindən səsləndirilsin?",
+        "Mahnıda istifadə olunsun dediyiniz sözlər, ifadələr varmı?",
+        "Şəkli necə göndərəcəksiniz?",
+        "WhatsApp nömrəniz:"
+      ]
+    },
+    {
+      "title": "Anama/atama özəl mahnı sifarişi",
+      "video": "video-valideyn.mp4",
+      "questions": [
+        "Atanızın/ Ananızın adı",
+        "Hansı mövzuya diqqət yetirmək istəyirsiniz?",
+        "Ananızın xarakterini və sizə təsirini necə təsvir edərsiniz?",
+        "Xüsusi xatirələriniz varmı?",
+        "Mahnıda tam olaraq nəyi ifadə etmək istəyirsiniz?",
+        "Mahnı xanım yoxsa bəy tərəfindən səsləndirilsin?",
+        "Mahnıda istifadə olunsun dediyiniz sözlər, ifadələr varmı?",
+        "Şəkli necə göndərəcəksiniz?",
+        "WhatsApp nömrəniz:"
       ]
     }
   ]
