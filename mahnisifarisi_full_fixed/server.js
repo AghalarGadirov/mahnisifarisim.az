@@ -9,6 +9,7 @@ app.use(express.json());
 
 // Qiymet JSON yolu
 const qiymetPath = "./qiymet.json";
+const formlarPath = "./formlar.json";
 
 // Qiymet oxu
 app.get("/api/qiymet", (req, res) => {
@@ -23,6 +24,22 @@ app.put("/api/qiymet", (req, res) => {
     fs.writeFile(qiymetPath, JSON.stringify(req.body, null, 2), err => {
         if (err) return res.status(500).send("Yazılmadı!");
         res.send({ message: "Dəyişiklik yadda saxlanıldı!" });
+    });
+});
+
+// Formlar oxu
+app.get("/api/formlar", (req, res) => {
+    fs.readFile(formlarPath, "utf8", (err, data) => {
+        if (err) return res.status(500).send("Xəta baş verdi!");
+        res.send(JSON.parse(data));
+    });
+});
+
+// Formlar yaz
+app.put("/api/formlar", (req, res) => {
+    fs.writeFile(formlarPath, JSON.stringify(req.body, null, 2), err => {
+        if (err) return res.status(500).send("Formlar saxlanmadı!");
+        res.send({ message: "Formlar uğurla yadda saxlandı!" });
     });
 });
 
