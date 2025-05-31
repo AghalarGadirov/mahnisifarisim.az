@@ -66,6 +66,36 @@ app.post("/api/upload", (req, res) => {
     });
 });
 
+// WhatsApp nömrəsini oxu
+app.get("/api/whatsapp", (req, res) => {
+    fs.readFile(formlarPath, "utf8", (err, data) => {
+        if (err) return res.status(500).send("Xəta baş verdi!");
+        try {
+            const parsed = JSON.parse(data);
+            res.send({ whatsapp: parsed.whatsapp || "" });
+        } catch {
+            res.status(500).send("JSON formatında xəta!");
+        }
+    });
+});
+
+// WhatsApp nömrəsini yaz
+app.put("/api/whatsapp", (req, res) => {
+    fs.readFile(formlarPath, "utf8", (err, data) => {
+        if (err) return res.status(500).send("Xəta baş verdi!");
+        try {
+            const parsed = JSON.parse(data);
+            parsed.whatsapp = req.body.whatsapp || "";
+            fs.writeFile(formlarPath, JSON.stringify(parsed, null, 2), err => {
+                if (err) return res.status(500).send("Yazılmadı!");
+                res.send({ message: "WhatsApp nömrəsi yadda saxlandı!" });
+            });
+        } catch {
+            res.status(500).send("JSON formatında xəta!");
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server işə düşdü: http://localhost:${port}`);
 });
