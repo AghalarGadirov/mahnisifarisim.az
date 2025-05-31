@@ -2,7 +2,7 @@
   "forms": [
     {
       "title": "Uşağıma özəl mahnı sifarişi",
-      "videos": "video-usaq.mp4",
+      "videos": ["video-usaq.mp4"],
       "questions": [
         "Uşağın adı, yaşı və xasiyyəti necədir?",
         "Bu mahnı hansı münasibət üçündür?",
@@ -18,7 +18,7 @@
     },
     {
       "title": "Sevgilimə özəl mahnı sifarişi",
-      "videos": "video-sevgili.mp4",
+      "videos": ["video-sevgili.mp4"],
       "questions": [
         "Sevgilinizin və sizin adınız",
         "Hansı mövzuya diqqət yetirmək istəyirsiniz?",
@@ -34,7 +34,7 @@
     },
     {
       "title": "Anama/atama özəl mahnı sifarişi",
-      "videos": "video-valideyn.mp4",
+      "videos": ["video-valideyn.mp4"],
       "questions": [
         "Atanızın/ Ananızın adı",
         "Hansı mövzuya diqqət yetirmək istəyirsiniz?",
