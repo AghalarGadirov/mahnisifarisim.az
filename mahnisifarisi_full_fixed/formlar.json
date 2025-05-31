@@ -47,18 +47,6 @@
         "WhatsApp nömrəniz:"
       ],
       "type": "video"
-    },
-    {
-      "title": "Instagram Reels videosu ilə mahnı sifarişi",
-      "video": "https://www.instagram.com/reel/DKPZTeWoLc0/",
-      "questions": [
-        "Videoda istifadə etdiyiniz Instagram linkini daxil edin:",
-        "Mahnı kimə həsr olunacaq?",
-        "Hansı duyğunu ifadə etməyimizi istəyirsiniz?",
-        "Mahnı xanım yoxsa bəy tərəfindən səsləndirilsin?",
-        "WhatsApp nömrəniz:"
-      ],
-      "type": "instagram"
     }
   ],
   "whatsapp": "994507142403"

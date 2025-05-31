@@ -40,32 +40,30 @@ app.put("/api/formlar", (req, res) => {
     fs.writeFile(formlarPath, JSON.stringify(req.body, null, 2), err => {
         if (err) return res.status(500).send("Formlar saxlanmadı!");
         res.send({ message: "Formlar uğurla yadda saxlandı!" });
-
-// WhatsApp nömrəsini oxu
-app.get("/api/whatsapp", (req, res) => {
-    fs.readFile(formlarPath, "utf8", (err, data) => {
-        if (err) return res.status(500).send("Xəta baş verdi!");
-        const jsonData = JSON.parse(data);
-        res.send({ whatsapp: jsonData.whatsapp || "" });
-    });
-});
-
-// WhatsApp nömrəsini yaz
-app.put("/api/whatsapp", (req, res) => {
-    fs.readFile(formlarPath, "utf8", (err, data) => {
-        if (err) return res.status(500).send("Xəta baş verdi!");
-        const jsonData = JSON.parse(data);
-        jsonData.whatsapp = req.body.whatsapp;
-        fs.writeFile(formlarPath, JSON.stringify(jsonData, null, 2), err => {
-            if (err) return res.status(500).send("Yazılmadı!");
-            res.send({ message: "WhatsApp nömrəsi yeniləndi!" });
-        });
-    });
-});
-
     });
 });
 
 app.listen(port, () => {
     console.log(`Server işə düşdü: http://localhost:${port}`);
+});
+
+const fileUpload = require("express-fileupload");
+const path = require("path");
+
+app.use(fileUpload());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// Fayl yükləmə
+app.post("/api/upload", (req, res) => {
+    if (!req.files || !req.files.video) {
+        return res.status(400).send("Video faylı tapılmadı.");
+    }
+    const video = req.files.video;
+    const uploadPath = path.join(__dirname, "uploads", video.name);
+
+    video.mv(uploadPath, err => {
+        if (err) return res.status(500).send("Yükləmə zamanı xəta baş verdi.");
+        res.send({ message: "Video uğurla yükləndi!", filename: video.name, path: `/uploads/${video.name}` });
+    });
 });
