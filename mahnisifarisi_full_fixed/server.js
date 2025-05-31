@@ -43,16 +43,14 @@ app.put("/api/formlar", (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server işə düşdü: http://localhost:${port}`);
-});
+// 🔥 Əlavə etdik: kök qovluqdakı fayllar (məsələn: cocuk.mp4) birbaşa təqdim olunsun
+app.use(express.static(__dirname));
 
 const fileUpload = require("express-fileupload");
 const path = require("path");
 
 app.use(fileUpload());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 
 // Fayl yükləmə
 app.post("/api/upload", (req, res) => {
@@ -66,4 +64,8 @@ app.post("/api/upload", (req, res) => {
         if (err) return res.status(500).send("Yükləmə zamanı xəta baş verdi.");
         res.send({ message: "Video uğurla yükləndi!", filename: video.name, path: `/uploads/${video.name}` });
     });
+});
+
+app.listen(port, () => {
+    console.log(`Server işə düşdü: http://localhost:${port}`);
 });
